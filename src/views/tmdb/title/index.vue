@@ -17,7 +17,7 @@
             :model="queryForm"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="24" :md="12" :lg="8">
                 <a-form-item field="title" :label="$t('tmdb.title.title')">
                   <a-input
                     v-model="queryForm.title"
@@ -26,7 +26,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="24" :md="12" :lg="8">
                 <a-form-item
                   field="tvdbId"
                   :label-col-props="{ span: 8 }"
@@ -96,44 +96,46 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-table
-        v-model:selectedKeys="selectedKeys"
-        row-key="id"
-        size="medium"
-        :data="data"
-        :columns="columns"
-        :bordered="false"
-        :loading="tableLoading"
-        :pagination="pagination"
-        :row-selection="rowSelection"
-        @page-size-change="onPageSizeChange"
-        @page-change="onPageChange"
-      >
-        <template #title="{ record }">
-          <a-input v-model="record.title" @change="onTitleChange(record)" />
-        </template>
-        <template #validStatus="{ record }">
-          <icon-check-circle
-            v-if="record.validStatus === 1"
-            size="21"
-            :style="{
-              color: 'rgb(var(--green-6))',
-            }"
-          />
-          <icon-close-circle
-            v-else
-            size="21"
-            :style="{
-              color: 'rgb(var(--orange-6))',
-            }"
-          />
-        </template>
-        <template #edit="{ record }">
-          <a-button type="text" size="mini" @click="edit(record)">
-            <icon-edit size="medium" />
-          </a-button>
-        </template>
-      </a-table>
+      <div class="table-responsive">
+        <a-table
+          v-model:selectedKeys="selectedKeys"
+          row-key="id"
+          size="medium"
+          :data="data"
+          :columns="columns"
+          :bordered="false"
+          :loading="tableLoading"
+          :pagination="pagination"
+          :row-selection="rowSelection"
+          @page-size-change="onPageSizeChange"
+          @page-change="onPageChange"
+        >
+          <template #title="{ record }">
+            <a-input v-model="record.title" @change="onTitleChange(record)" />
+          </template>
+          <template #validStatus="{ record }">
+            <icon-check-circle
+              v-if="record.validStatus === 1"
+              size="21"
+              :style="{
+                color: 'rgb(var(--green-6))',
+              }"
+            />
+            <icon-close-circle
+              v-else
+              size="21"
+              :style="{
+                color: 'rgb(var(--orange-6))',
+              }"
+            />
+          </template>
+          <template #edit="{ record }">
+            <a-button type="text" size="mini" @click="edit(record)">
+              <icon-edit size="medium" />
+            </a-button>
+          </template>
+        </a-table>
+      </div>
     </a-card>
   </div>
 </template>
@@ -345,5 +347,59 @@
 <style scoped lang="less">
   .container {
     padding: 0 20px 20px 20px;
+  }
+
+  /* 移动端响应式优化 */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 12px 12px 12px;
+    }
+    
+    .general-card {
+      margin: 0;
+      border-radius: 8px;
+      
+      :deep(.arco-card-header) {
+        padding: 16px;
+      }
+      
+      :deep(.arco-card-body) {
+        padding: 12px;
+      }
+    }
+    
+    // 搜索表单响应式
+    :deep(.arco-form-item-label) {
+      text-align: left;
+      padding-bottom: 4px;
+    }
+    
+    // 表格响应式
+    .table-responsive {
+      margin: 0 -12px;
+      padding: 0 12px;
+    }
+    
+    // 操作按钮响应式
+    :deep(.arco-space) {
+      flex-wrap: wrap;
+    }
+    
+    :deep(.arco-btn) {
+      flex: 1;
+      min-width: 120px;
+    }
+    
+    // 搜索表单响应式
+    :deep(.arco-form-item-label) {
+      text-align: left;
+      padding-bottom: 4px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 8px 8px 8px;
+    }
   }
 </style>

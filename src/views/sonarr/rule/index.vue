@@ -18,7 +18,7 @@
             :model="queryForm"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="24" :md="12" :lg="8">
                 <a-form-item field="token" :label="$t('sonarr.rule.token')">
                   <a-select
                     v-model="queryForm.token"
@@ -29,7 +29,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="24" :md="12" :lg="8">
                 <a-form-item
                   field="remark"
                   :label-col-props="{ span: 8 }"
@@ -154,67 +154,69 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-table
-        v-model:selectedKeys="selectedKeys"
-        row-key="id"
-        size="medium"
-        :data="data"
-        :columns="columns"
-        :bordered="false"
-        :loading="tableLoading"
-        :pagination="pagination"
-        :row-selection="rowSelection"
-        @page-size-change="onPageSizeChange"
-        @page-change="onPageChange"
-      >
-        <template #seasonNumber="{ record }">
-          <icon-minus
-            v-if="record.seasonNumber === -1"
-            size="13"
-            :style="{
-              color: 'var(--color-neutral-6)',
-            }"
-          />
-          <span v-else>{{ record.seasonNumber }}</span>
-        </template>
-        <template #monitored="{ record }">
-          <icon-eye
-            v-if="record.monitored === 1"
-            size="21"
-            :style="{
-              color: 'rgb(var(--green-6))',
-            }"
-          />
-          <icon-eye-invisible
-            v-else
-            size="21"
-            :style="{
-              color: 'var(--color-neutral-6)',
-            }"
-          />
-        </template>
-        <template #validStatus="{ record }">
-          <icon-check-circle
-            v-if="record.validStatus === 1"
-            size="21"
-            :style="{
-              color: 'rgb(var(--green-6))',
-            }"
-          />
-          <icon-close-circle
-            v-else
-            size="21"
-            :style="{
-              color: 'rgb(var(--orange-6))',
-            }"
-          />
-        </template>
-        <template #edit="{ record }">
-          <a-button type="text" size="mini" @click="edit(record)">
-            <icon-edit size="medium" />
-          </a-button>
-        </template>
-      </a-table>
+      <div class="table-responsive">
+        <a-table
+          v-model:selectedKeys="selectedKeys"
+          row-key="id"
+          size="medium"
+          :data="data"
+          :columns="columns"
+          :bordered="false"
+          :loading="tableLoading"
+          :pagination="pagination"
+          :row-selection="rowSelection"
+          @page-size-change="onPageSizeChange"
+          @page-change="onPageChange"
+        >
+          <template #seasonNumber="{ record }">
+            <icon-minus
+              v-if="record.seasonNumber === -1"
+              size="13"
+              :style="{
+                color: 'var(--color-neutral-6)',
+              }"
+            />
+            <span v-else>{{ record.seasonNumber }}</span>
+          </template>
+          <template #monitored="{ record }">
+            <icon-eye
+              v-if="record.monitored === 1"
+              size="21"
+              :style="{
+                color: 'rgb(var(--green-6))',
+              }"
+            />
+            <icon-eye-invisible
+              v-else
+              size="21"
+              :style="{
+                color: 'var(--color-neutral-6)',
+              }"
+            />
+          </template>
+          <template #validStatus="{ record }">
+            <icon-check-circle
+              v-if="record.validStatus === 1"
+              size="21"
+              :style="{
+                color: 'rgb(var(--green-6))',
+              }"
+            />
+            <icon-close-circle
+              v-else
+              size="21"
+              :style="{
+                color: 'rgb(var(--orange-6))',
+              }"
+            />
+          </template>
+          <template #edit="{ record }">
+            <a-button type="text" size="mini" @click="edit(record)">
+              <icon-edit size="medium" />
+            </a-button>
+          </template>
+        </a-table>
+      </div>
     </a-card>
   </div>
 </template>
@@ -314,6 +316,13 @@
       dataIndex: 'offset',
       width: 100,
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('sonarr.rule.replacement'),
+      dataIndex: 'replacement',
+      width: 150,
       ellipsis: true,
       tooltip: true,
     },
@@ -522,5 +531,59 @@
 <style scoped lang="less">
   .container {
     padding: 0 20px 20px 20px;
+  }
+
+  /* 移动端响应式优化 */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 12px 12px 12px;
+    }
+    
+    .general-card {
+      margin: 0;
+      border-radius: 8px;
+      
+      :deep(.arco-card-header) {
+        padding: 16px;
+      }
+      
+      :deep(.arco-card-body) {
+        padding: 12px;
+      }
+    }
+    
+    // 搜索表单响应式
+    :deep(.arco-form-item-label) {
+      text-align: left;
+      padding-bottom: 4px;
+    }
+    
+    // 表格响应式
+    .table-responsive {
+      margin: 0 -12px;
+      padding: 0 12px;
+    }
+    
+    // 操作按钮响应式
+    :deep(.arco-space) {
+      flex-wrap: wrap;
+    }
+    
+    :deep(.arco-btn) {
+      flex: 1;
+      min-width: 120px;
+    }
+    
+    // 搜索表单响应式
+    :deep(.arco-form-item-label) {
+      text-align: left;
+      padding-bottom: 4px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 8px 8px 8px;
+    }
   }
 </style>
