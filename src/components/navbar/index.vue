@@ -36,7 +36,7 @@
       <Menu v-if="topMenu" />
     </div>
     <ul class="right-side">
-      <li>
+      <li class="nav-item">
         <a-tooltip :content="$t('navbar.github')">
           <a-button
             href="https://github.com/LuckyPuppy514/jproxy"
@@ -49,7 +49,7 @@
           </a-button>
         </a-tooltip>
       </li>
-      <li>
+      <li class="nav-item">
         <a-tooltip :content="$t('navbar.issue')">
           <a-button
             href="https://github.com/LuckyPuppy514/jproxy/issues/new/choose"
@@ -62,7 +62,7 @@
           </a-button>
         </a-tooltip>
       </li>
-      <li>
+      <li class="nav-item nav-dropdown">
         <a-tooltip :content="$t('navbar.language')">
           <a-button
             class="nav-btn"
@@ -91,7 +91,7 @@
           </template>
         </a-dropdown>
       </li>
-      <li>
+      <li class="nav-item">
         <a-tooltip
           :content="theme === 'light' ? $t('navbar.dark') : $t('navbar.light')"
         >
@@ -108,8 +108,8 @@
           </a-button>
         </a-tooltip>
       </li>
-      <li>
-        <a-dropdown trigger="hover">
+      <li class="nav-item nav-dropdown">
+        <a-dropdown trigger="hover" :trigger="appStore.device === 'mobile' ? 'click' : 'hover'">
           <a-avatar
             :size="30"
             :style="{
@@ -173,7 +173,6 @@
     valueLight: 'light',
     storageKey: 'arco-theme',
     onChanged(dark: boolean) {
-      // overridden default behavior
       appStore.toggleTheme(dark);
     },
   });
@@ -217,15 +216,18 @@
 
   .right-side {
     display: flex;
+    align-items: center;
     padding-right: 20px;
     list-style: none;
+    gap: 8px;
+    
     :deep(.locale-select) {
       border-radius: 20px;
     }
+    
     li {
       display: flex;
       align-items: center;
-      padding: 0 10px;
     }
 
     a {
@@ -236,6 +238,8 @@
       border-color: rgb(var(--gray-2));
       color: rgb(var(--gray-8));
       font-size: 16px;
+      min-width: 40px;
+      height: 40px;
     }
     .nav-btn:hover {
       color: rgb(var(--primary-5));
@@ -249,6 +253,42 @@
     }
     .trigger-btn {
       margin-left: 14px;
+    }
+  }
+
+  /* 移动端优化 */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 12px;
+    }
+    
+    .left-side {
+      padding-left: 12px;
+    }
+    
+    .right-side {
+      padding-right: 12px;
+      gap: 4px;
+    }
+    
+    .right-side li {
+      padding: 0;
+    }
+    
+    .nav-btn {
+      min-width: 36px;
+      height: 36px;
+      font-size: 14px;
+    }
+    
+    .a-avatar {
+      width: 28px !important;
+      height: 28px !important;
+    }
+    
+    /* 隐藏版本号以节省空间 */
+    .left-side a-link {
+      display: none;
     }
   }
 </style>

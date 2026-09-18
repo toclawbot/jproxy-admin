@@ -9,7 +9,7 @@
           v-if="renderMenu"
           v-show="!hideMenu"
           class="layout-sider"
-          breakpoint="lg"
+          breakpoint="md"
           :collapsed="collapsed"
           :collapsible="true"
           :width="menuWidth"
@@ -174,5 +174,31 @@
     overflow-y: hidden;
     background-color: var(--color-fill-2);
     transition: padding 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
+  }
+
+  /* 移动端响应式优化 */
+  @media (max-width: 768px) {
+    .layout-content {
+      padding: 12px !important;
+      overflow-y: auto;
+    }
+    
+    .layout-sider {
+      z-index: 100;
+    }
+    
+    // 抽屉全屏
+    :deep(.arco-drawer) {
+      :deep(.arco-drawer-content) {
+        width: 100vw !important;
+        max-width: 100vw !important;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .layout-content {
+      padding: 8px !important;
+    }
   }
 </style>

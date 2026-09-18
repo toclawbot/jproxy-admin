@@ -157,4 +157,32 @@
       }
     }
   }
+
+  /* 移动端优化 */
+  @media (max-width: 768px) {
+    :deep(.arco-menu) {
+      // 移动端菜单项更大的点击区域
+      .arco-menu-item {
+        padding: 12px 16px;
+        font-size: 15px;
+      }
+      
+      .arco-menu-inline-header {
+        padding: 12px 16px;
+      }
+      
+      .arco-menu-sub-menu-title {
+        padding: 12px 16px;
+      }
+      
+      .arco-icon {
+        font-size: 20px;
+      }
+    }
+    
+    // 抽屉模式下的菜单样式
+    :deep(.arco-drawer-content) {
+      padding: 0;
+    }
+  }
 </style>
