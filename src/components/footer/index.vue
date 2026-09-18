@@ -41,4 +41,23 @@
   .footer .arco-icon-spin {
     animation: arco-loading-circle 1.5s infinite cubic-bezier(0, 0, 1, 1);
   }
+
+  /* 移动端优化 */
+  @media (max-width: 768px) {
+    .footer {
+      height: auto;
+      padding: 12px 8px;
+      flex-direction: column;
+      gap: 8px;
+      
+      a {
+        margin: 2px 0;
+        font-size: 12px;
+      }
+      
+      .arco-icon-spin {
+        font-size: 18px;
+      }
+    }
+  }
 </style>

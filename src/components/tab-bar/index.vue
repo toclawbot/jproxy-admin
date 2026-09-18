@@ -98,4 +98,48 @@
       height: 32px;
     }
   }
+
+  /* 移动端优化 */
+  @media (max-width: 768px) {
+    .tab-bar-container {
+      .tab-bar-box {
+        padding: 0 0 0 12px;
+      }
+      
+      .tab-bar-scroll {
+        height: 36px;
+      }
+      
+      .tags-wrap {
+        height: 40px;
+        padding: 2px 0;
+        
+        :deep(.arco-tag) {
+          font-size: 12px;
+          padding: 2px 8px;
+          margin-right: 4px;
+          
+          .arco-tag-text {
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .tags-wrap {
+        :deep(.arco-tag) {
+          font-size: 11px;
+          padding: 2px 6px;
+          
+          .arco-tag-text {
+            max-width: 80px;
+          }
+        }
+      }
+    }
+  }
 </style>
