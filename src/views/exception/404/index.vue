@@ -39,4 +39,48 @@
     margin-top: -200px;
     text-align: center;
   }
+
+  /* 移动端响应式优化 */
+  @media (max-width: 768px) {
+    .content {
+      position: static;
+      margin: 0 auto;
+      padding: 48px 24px;
+      transform: none;
+      
+      :deep(.arco-result) {
+        padding: 24px 16px;
+      }
+      
+      :deep(.arco-result-title) {
+        font-size: 64px;
+      }
+      
+      :deep(.arco-result-subtitle) {
+        font-size: 16px;
+        padding: 0 16px;
+      }
+    }
+    
+    .operation-row {
+      :deep(.arco-btn) {
+        width: 100%;
+        margin: 8px 0 !important;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .content {
+      padding: 32px 16px;
+      
+      :deep(.arco-result-title) {
+        font-size: 48px;
+      }
+      
+      :deep(.arco-result-subtitle) {
+        font-size: 14px;
+      }
+    }
+  }
 </style>
