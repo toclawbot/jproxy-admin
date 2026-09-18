@@ -168,4 +168,43 @@
   .system-user-action button {
     margin: 10px;
   }
+
+  /* 移动端响应式优化 */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 12px 12px 12px;
+      height: auto;
+      min-height: calc(100% - 60px);
+      
+      :deep(.system-user-div) {
+        align-items: flex-start;
+        padding-top: 24px;
+        background-color: var(--color-bg-2);
+      }
+    }
+    
+    .system-user-form {
+      width: 100%;
+      max-width: 100%;
+      padding: 24px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--color-neutral-3);
+      box-shadow: 0 0 20px var(--color-fill-1);
+    }
+    
+    :deep(.arco-form-item-label) {
+      text-align: left;
+      padding-bottom: 4px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 8px 8px 8px;
+    }
+    
+    .system-user-form {
+      padding: 16px 12px;
+    }
+  }
 </style>
