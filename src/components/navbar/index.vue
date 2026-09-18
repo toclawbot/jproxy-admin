@@ -109,7 +109,7 @@
         </a-tooltip>
       </li>
       <li class="nav-item nav-dropdown">
-        <a-dropdown trigger="hover" :trigger="appStore.device === 'mobile' ? 'click' : 'hover'">
+        <a-dropdown :trigger="appStore.device === 'mobile' ? 'click' : 'hover'">
           <a-avatar
             :size="30"
             :style="{
