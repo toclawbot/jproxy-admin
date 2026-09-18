@@ -31,15 +31,18 @@ jobs:
         run: npm install
       - name: Build project
         run: npm run build
+      - name: Package dist into zip
+        run: zip -r dist.zip dist
+
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v4
         with:
           name: production-files
-          path: ./dist
+          path: ./dist.zip
       - name: Publish to Releases
         uses: softprops/action-gh-release@v2
         with:
-          files: ./dist/**
+          files: ./dist.zip
           tag_name: ${{ github.ref_name }}
           draft: false
           prerelease: false
