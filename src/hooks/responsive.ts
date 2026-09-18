@@ -3,7 +3,7 @@ import { useDebounceFn } from '@vueuse/core';
 import { useAppStore } from '@/store';
 import { addEventListen, removeEventListen } from '@/utils/event';
 
-const WIDTH = 992; // https://arco.design/vue/component/grid#responsivevalue
+const WIDTH = 768; // 降低移动端断点，适配手机屏幕，避免布局挤压
 
 function queryDevice() {
   const rect = document.body.getBoundingClientRect();

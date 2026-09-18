@@ -9,7 +9,7 @@
           v-if="renderMenu"
           v-show="!hideMenu"
           class="layout-sider"
-          breakpoint="xl"
+          breakpoint="lg"
           :collapsed="collapsed"
           :collapsible="true"
           :width="menuWidth"
