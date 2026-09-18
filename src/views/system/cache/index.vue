@@ -3,7 +3,7 @@
     <Breadcrumb :items="['menu.system', 'menu.system.cache']" />
     <div class="system-cache-div">
       <a-row :gutter="30">
-        <a-col :span="8">
+        <a-col :span="24" :md="12" :lg="8">
           <a-card
             class="system-cache-card"
             :title="$t('system.cache.system.config')"
@@ -21,7 +21,7 @@
             </a-button>
           </a-card>
         </a-col>
-        <a-col :span="8">
+        <a-col :span="24" :md="12" :lg="8">
           <a-card
             class="system-cache-card"
             :title="$t('system.cache.sonarr.rule')"
@@ -39,7 +39,7 @@
             </a-button>
           </a-card>
         </a-col>
-        <a-col :span="8">
+        <a-col :span="24" :md="12" :lg="8">
           <a-card
             class="system-cache-card"
             :title="$t('system.cache.radarr.rule')"
@@ -59,7 +59,7 @@
         </a-col>
       </a-row>
       <a-row :gutter="30">
-        <a-col :span="8">
+        <a-col :span="24" :md="12" :lg="8">
           <a-card
             class="system-cache-card"
             :title="$t('system.cache.sonarr.title.sync.interval')"
@@ -77,7 +77,7 @@
             </a-button>
           </a-card>
         </a-col>
-        <a-col :span="8">
+        <a-col :span="24" :md="12" :lg="8">
           <a-card
             class="system-cache-card"
             :title="$t('system.cache.tmdb.title.sync.interval')"
@@ -95,7 +95,7 @@
             </a-button>
           </a-card>
         </a-col>
-        <a-col :span="8">
+        <a-col :span="24" :md="12" :lg="8">
           <a-card
             class="system-cache-card"
             :title="$t('system.cache.radarr.title.sync.interval')"
@@ -228,5 +228,49 @@
   }
   .system-cache-div button:last-child {
     margin-top: 20px;
+  }
+
+  /* 移动端响应式优化 */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 12px 12px 12px;
+      height: auto;
+      min-height: calc(100% - 60px);
+      
+      :deep(.system-cache-div) {
+        padding: 12px;
+        background-color: var(--color-bg-2);
+      }
+    }
+    
+    .system-cache-card {
+      margin-bottom: 16px;
+      border-radius: 8px;
+      
+      :deep(.arco-card-header) {
+        padding: 12px 16px;
+      }
+      
+      :deep(.arco-card-body) {
+        padding: 16px;
+      }
+    }
+    
+    .system-cache-action {
+      position: static;
+      padding: 16px 0;
+      
+      button {
+        width: 100%;
+        height: 44px;
+        font-size: 16px;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 8px 8px 8px;
+    }
   }
 </style>
