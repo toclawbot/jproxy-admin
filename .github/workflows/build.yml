@@ -2,14 +2,10 @@ name: Deploy
 
 on:
   push:
-    tags:
-       - '*'
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   contents: write
-  releases: write
 
 jobs:
   build:
