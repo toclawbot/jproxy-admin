@@ -8,7 +8,7 @@
       :wrapper-col-props="{ span: 18 }"
     >
       <a-row :gutter="20">
-        <a-col :span="12">
+        <a-col :span="24" :md="12" :lg="12">
           <a-card
             hoverable
             class="form-card"
@@ -175,7 +175,7 @@
             </a-form-item>
           </a-card>
         </a-col>
-        <a-col :span="12">
+        <a-col :span="24" :md="12" :lg="12">
           <a-card
             hoverable
             class="form-card"
@@ -502,7 +502,7 @@
   reset();
 </script>
 
-<style>
+<style lang="less" scoped>
   .container {
     padding: 0 20px 40px 20px;
   }
@@ -530,5 +530,54 @@
   }
   .form-card .arco-form-item.arco-form-item-error {
     margin-bottom: 20px;
+  }
+
+  /* 移动端响应式优化 */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 12px 24px 12px;
+    }
+    
+    .form-card {
+      margin-bottom: 16px;
+      border-radius: 8px;
+    }
+    
+    .form-card .arco-card-header {
+      padding: 16px;
+    }
+    
+    .form-card .arco-card-body {
+      padding: 16px;
+    }
+    
+    .form-card .form-item {
+      margin-left: 0;
+    }
+    
+    .actions {
+      position: static;
+      padding: 20px 0;
+      background: var(--color-bg-2);
+      
+      button {
+        width: 100%;
+        margin: 8px 0;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 8px 16px 8px;
+    }
+    
+    .form-card .arco-card-header {
+      padding: 12px;
+    }
+    
+    .form-card .arco-card-body {
+      padding: 12px;
+    }
   }
 </style>
