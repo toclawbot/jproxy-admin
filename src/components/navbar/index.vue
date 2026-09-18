@@ -35,117 +35,150 @@
     <div class="center-side">
       <Menu v-if="topMenu" />
     </div>
-    <ul class="right-side">
-      <li class="nav-item">
-        <a-tooltip :content="$t('navbar.github')">
-          <a-button
-            href="https://github.com/LuckyPuppy514/jproxy"
-            target="_blank"
-            class="nav-btn"
-            type="outline"
-            :shape="'circle'"
-          >
-            <icon-github />
-          </a-button>
-        </a-tooltip>
-      </li>
-      <li class="nav-item">
-        <a-tooltip :content="$t('navbar.issue')">
-          <a-button
-            href="https://github.com/LuckyPuppy514/jproxy/issues/new/choose"
-            target="_blank"
-            class="nav-btn"
-            type="outline"
-            :shape="'circle'"
-          >
-            <icon-bug />
-          </a-button>
-        </a-tooltip>
-      </li>
-      <li class="nav-item nav-dropdown">
-        <a-tooltip :content="$t('navbar.language')">
-          <a-button
-            class="nav-btn"
-            type="outline"
-            :shape="'circle'"
-            @click="setDropDownVisible"
-          >
-            <template #icon>
-              <icon-language />
-            </template>
-          </a-button>
-        </a-tooltip>
-        <a-dropdown trigger="click" @select="changeLocale as any">
-          <div ref="triggerBtn" class="trigger-btn"></div>
-          <template #content>
-            <a-doption
-              v-for="item in locales"
-              :key="item.value"
-              :value="item.value"
+    <div class="right-side">
+      <!-- 主要操作按钮：始终显示 -->
+      <div class="nav-primary-actions">
+        <div class="nav-item nav-dropdown">
+          <a-tooltip :content="$t('navbar.language')" :disabled="appStore.device === 'mobile'">
+            <a-button
+              class="nav-btn"
+              type="outline"
+              :shape="'circle'"
+              @click="setDropDownVisible"
             >
               <template #icon>
-                <icon-check v-show="item.value === currentLocale" />
+                <icon-language />
               </template>
-              {{ item.label }}
-            </a-doption>
-          </template>
-        </a-dropdown>
-      </li>
-      <li class="nav-item">
-        <a-tooltip
-          :content="theme === 'light' ? $t('navbar.dark') : $t('navbar.light')"
-        >
-          <a-button
-            class="nav-btn"
-            type="outline"
-            :shape="'circle'"
-            @click="handleToggleTheme"
+            </a-button>
+          </a-tooltip>
+          <a-dropdown trigger="click" @select="changeLocale as any">
+            <div ref="triggerBtn" class="trigger-btn"></div>
+            <template #content>
+              <a-doption
+                v-for="item in locales"
+                :key="item.value"
+                :value="item.value"
+              >
+                <template #icon>
+                  <icon-check v-show="item.value === currentLocale" />
+                </template>
+                {{ item.label }}
+              </a-doption>
+            </template>
+          </a-dropdown>
+        </div>
+        <div class="nav-item">
+          <a-tooltip
+            :content="theme === 'light' ? $t('navbar.dark') : $t('navbar.light')"
+            :disabled="appStore.device === 'mobile'"
           >
+            <a-button
+              class="nav-btn"
+              type="outline"
+              :shape="'circle'"
+              @click="handleToggleTheme"
+            >
+              <template #icon>
+                <icon-moon-fill v-if="theme === 'dark'" />
+                <icon-sun-fill v-else />
+              </template>
+            </a-button>
+          </a-tooltip>
+        </div>
+        <div class="nav-item nav-dropdown">
+          <a-dropdown :trigger="appStore.device === 'mobile' ? 'click' : 'hover'">
+            <a-avatar
+              :size="30"
+              :style="{
+                marginRight: '8px',
+                cursor: 'pointer',
+                backgroundColor: '#3370ff',
+              }"
+            >
+              <IconUser />
+            </a-avatar>
+            <template #content>
+              <a-doption>
+                <a-space @click="$router.push({ name: 'systemUser' })">
+                  <icon-settings />
+                  <span>
+                    {{ $t('navbar.user') }}
+                  </span>
+                </a-space>
+              </a-doption>
+              <a-doption>
+                <a-space @click="handleLogout">
+                  <icon-export />
+                  <span>
+                    {{ $t('navbar.logout') }}
+                  </span>
+                </a-space>
+              </a-doption>
+            </template>
+          </a-dropdown>
+        </div>
+      </div>
+      
+      <!-- 次要操作：移动端折叠到更多菜单 -->
+      <div class="nav-secondary-actions" v-if="!isMobile">
+        <div class="nav-item">
+          <a-tooltip :content="$t('navbar.github')">
+            <a-button
+              href="https://github.com/LuckyPuppy514/jproxy"
+              target="_blank"
+              class="nav-btn"
+              type="outline"
+              :shape="'circle'"
+            >
+              <icon-github />
+            </a-button>
+          </a-tooltip>
+        </div>
+        <div class="nav-item">
+          <a-tooltip :content="$t('navbar.issue')">
+            <a-button
+              href="https://github.com/LuckyPuppy514/jproxy/issues/new/choose"
+              target="_blank"
+              class="nav-btn"
+              type="outline"
+              :shape="'circle'"
+            >
+              <icon-bug />
+            </a-button>
+          </a-tooltip>
+        </div>
+      </div>
+      
+      <!-- 移动端更多菜单 -->
+      <div class="nav-mobile-more" v-else>
+        <a-dropdown trigger="click" placement="bottom-end">
+          <a-button class="nav-btn" type="outline" :shape="'circle'">
             <template #icon>
-              <icon-moon-fill v-if="theme === 'dark'" />
-              <icon-sun-fill v-else />
+              <icon-more />
             </template>
           </a-button>
-        </a-tooltip>
-      </li>
-      <li class="nav-item nav-dropdown">
-        <a-dropdown :trigger="appStore.device === 'mobile' ? 'click' : 'hover'">
-          <a-avatar
-            :size="30"
-            :style="{
-              marginRight: '8px',
-              cursor: 'pointer',
-              backgroundColor: '#3370ff',
-            }"
-          >
-            <IconUser />
-          </a-avatar>
           <template #content>
             <a-doption>
-              <a-space @click="$router.push({ name: 'systemUser' })">
-                <icon-settings />
-                <span>
-                  {{ $t('navbar.user') }}
-                </span>
+              <a-space @click="openGithub">
+                <icon-github />
+                <span>{{ $t('navbar.github') }}</span>
               </a-space>
             </a-doption>
             <a-doption>
-              <a-space @click="handleLogout">
-                <icon-export />
-                <span>
-                  {{ $t('navbar.logout') }}
-                </span>
+              <a-space @click="openIssue">
+                <icon-bug />
+                <span>{{ $t('navbar.issue') }}</span>
               </a-space>
             </a-doption>
           </template>
         </a-dropdown>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, inject } from 'vue';
+  import { computed, ref, inject, onMounted, onUnmounted } from 'vue';
   import { useDark, useToggle } from '@vueuse/core';
   import { useAppStore } from '@/store';
   import { LOCALE_OPTIONS } from '@/locale';
@@ -193,6 +226,26 @@
     triggerBtn.value.dispatchEvent(event);
   };
   const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
+  
+  // 移动端检测
+  const isMobile = ref(false);
+  const checkMobile = () => {
+    isMobile.value = window.innerWidth < 768;
+  };
+  onMounted(() => {
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+  });
+  onUnmounted(() => {
+    window.removeEventListener('resize', checkMobile);
+  });
+  
+  const openGithub = () => {
+    window.open('https://github.com/LuckyPuppy514/jproxy', '_blank');
+  };
+  const openIssue = () => {
+    window.open('https://github.com/LuckyPuppy514/jproxy/issues/new/choose', '_blank');
+  };
 </script>
 
 <style scoped lang="less">
@@ -208,10 +261,12 @@
     display: flex;
     align-items: center;
     padding-left: 20px;
+    min-width: 0;
   }
 
   .center-side {
     flex: 1;
+    min-width: 0;
   }
 
   .right-side {
@@ -220,12 +275,13 @@
     padding-right: 20px;
     list-style: none;
     gap: 8px;
+    min-width: 0;
     
     :deep(.locale-select) {
       border-radius: 20px;
     }
     
-    li {
+    .nav-item {
       display: flex;
       align-items: center;
     }
@@ -255,23 +311,39 @@
       margin-left: 14px;
     }
   }
+  
+  .nav-primary-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .nav-secondary-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .nav-mobile-more {
+    display: none;
+  }
 
   /* 移动端优化 */
   @media (max-width: 768px) {
     .navbar {
-      padding: 0 12px;
+      padding: 0 8px;
     }
     
     .left-side {
-      padding-left: 12px;
+      padding-left: 8px;
     }
     
     .right-side {
-      padding-right: 12px;
+      padding-right: 8px;
       gap: 4px;
     }
     
-    .right-side li {
+    .nav-item {
       padding: 0;
     }
     
@@ -289,6 +361,51 @@
     /* 隐藏版本号以节省空间 */
     .left-side a-link {
       display: none;
+    }
+    
+    /* 次要操作隐藏，改为更多菜单 */
+    .nav-secondary-actions {
+      display: none;
+    }
+    
+    .nav-mobile-more {
+      display: flex;
+    }
+    
+    .nav-primary-actions {
+      gap: 4px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navbar {
+      padding: 0 4px;
+    }
+    
+    .left-side {
+      padding-left: 4px;
+    }
+    
+    .right-side {
+      padding-right: 4px;
+      gap: 2px;
+    }
+    
+    .nav-btn {
+      min-width: 32px;
+      height: 32px;
+      font-size: 13px;
+    }
+    
+    .a-avatar {
+      width: 26px !important;
+      height: 26px !important;
+    }
+    
+    :deep(.arco-dropdown) {
+      :deep(.arco-dropdown-menu) {
+        min-width: 160px;
+      }
     }
   }
 </style>
